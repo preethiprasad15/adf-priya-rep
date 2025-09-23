@@ -2357,14 +2357,7 @@
 					{
 						"name": "Web1",
 						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Wait1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -2467,15 +2460,6 @@
 								"parameters": {}
 							}
 						]
-					},
-					{
-						"name": "Wait1",
-						"type": "Wait",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"waitTimeInSeconds": 1
-						}
 					}
 				],
 				"policy": {
