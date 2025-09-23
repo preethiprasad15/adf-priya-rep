@@ -1,0 +1,25 @@
+{
+	"name": "Schedule trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_file_copy",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2025-09-20T12:35:00",
+				"endTime": "2025-09-20T12:46:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

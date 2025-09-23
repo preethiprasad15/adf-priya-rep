@@ -1,0 +1,17 @@
+{
+	"name": "ds_keyvault_test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sqldbdevpriya_keyvault",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "inc_salesitems"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

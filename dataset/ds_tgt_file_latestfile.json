@@ -1,0 +1,24 @@
+{
+	"name": "ds_tgt_file_latestfile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsgen2priya",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "target_latest_file",
+				"fileSystem": "adlsgen2priyacontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

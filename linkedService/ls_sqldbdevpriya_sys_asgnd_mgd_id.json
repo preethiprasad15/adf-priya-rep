@@ -1,0 +1,12 @@
+{
+	"name": "ls_sqldbdevpriya_sys_asgnd_mgd_id",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "ls_sqldbdevpriya_sys_asgnd_mgd_id",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserverdevpriya.database.windows.net;Initial Catalog=sqldbdevpriya"
+		}
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"name": "adf-dev-priya",
+	"properties": {
+		"globalParameters": {
+			"container": {
+				"type": "string",
+				"value": "adlsgen2priyacontainer"
+			},
+			"targetfilepath": {
+				"type": "string",
+				"value": "target_globalparam"
+			}
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b58383fe-02b5-45fa-86b5-304fd370037f",
+		"tenantId": "fe8464d0-faf9-42db-877d-d9d89d840381"
+	}
+}

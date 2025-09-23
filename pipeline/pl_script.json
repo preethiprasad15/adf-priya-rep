@@ -1,0 +1,48 @@
+{
+	"name": "pl_script",
+	"properties": {
+		"activities": [
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_sqldbdevpriya",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "Playername",
+									"type": "String",
+									"value": "Dhoni",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "select * from [dbo].[iplteams] where name =@Playername"
+						},
+						{
+							"type": "NonQuery",
+							"text": "update [dbo].[iplteams] set score=1000 where name='Rohit'"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-09-10T14:08:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

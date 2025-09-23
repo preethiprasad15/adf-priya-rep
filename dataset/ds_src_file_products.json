@@ -1,0 +1,25 @@
+{
+	"name": "ds_src_file_products",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsgen2priya",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Product-sales.csv",
+				"folderPath": "source",
+				"fileSystem": "adlsgen2priyacontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
