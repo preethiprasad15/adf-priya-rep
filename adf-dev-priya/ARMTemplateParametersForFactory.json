@@ -1,0 +1,57 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-dev-priya"
+		},
+		"ls_adlsgen2priya_accountKey": {
+			"value": ""
+		},
+		"ls_sqldbdevpriya_password": {
+			"value": ""
+		},
+		"ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserverdevpriya.database.windows.net;Initial Catalog=sqldbdevpriya"
+		},
+		"ls_sqltargetdbdevpriya_password": {
+			"value": ""
+		},
+		"ls_adlsgen2priya_properties_typeProperties_url": {
+			"value": "https://adlsgen2priya.dfs.core.windows.net"
+		},
+		"ls_keyvault_properties_typeProperties_baseUrl": {
+			"value": "https://keyvault-priya.vault.azure.net/"
+		},
+		"ls_sqldbdevpriya_properties_typeProperties_server": {
+			"value": "sqlserverdevpriya.database.windows.net"
+		},
+		"ls_sqldbdevpriya_properties_typeProperties_database": {
+			"value": "sqldbdevpriya"
+		},
+		"ls_sqldbdevpriya_properties_typeProperties_userName": {
+			"value": "priya"
+		},
+		"ls_sqldbdevpriya_keyvault_properties_typeProperties_connectionString_secretName": {
+			"value": "secretdbtest"
+		},
+		"ls_sqltargetdbdevpriya_properties_typeProperties_server": {
+			"value": "sqlserverdevpriya.database.windows.net"
+		},
+		"ls_sqltargetdbdevpriya_properties_typeProperties_database": {
+			"value": "sqltargetdbdevpriya"
+		},
+		"ls_sqltargetdbdevpriya_properties_typeProperties_userName": {
+			"value": "priya"
+		},
+		"ls_web_restAPI_properties_typeProperties_url": {
+			"value": "https://reqres.in/api/users"
+		},
+		"Tumbling window trigger_properties_pipeline_parameters_StartDate": {
+			"value": "@trigger().outputs.windowStartTime"
+		},
+		"Tumbling window trigger_properties_pipeline_parameters_EndDate": {
+			"value": "@trigger().outputs.windowEndTime"
+		}
+	}
+}

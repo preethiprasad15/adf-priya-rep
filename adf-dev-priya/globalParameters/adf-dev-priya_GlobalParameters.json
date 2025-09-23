@@ -1,0 +1,10 @@
+{
+	"container": {
+		"type": "string",
+		"value": "adlsgen2priyacontainer"
+	},
+	"targetfilepath": {
+		"type": "string",
+		"value": "target_globalparam"
+	}
+}
