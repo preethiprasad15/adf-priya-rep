@@ -1,11 +1,11 @@
 {
 	"name": "ls_keyvault",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://keyvault-priya.vault.azure.net/"
+			"baseUrl": "https://keyvault-preethi.vault.azure.net/"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
