@@ -1,10 +1,6 @@
 {
 	"name": "ds_src_sys_asgnd_mgd_id",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "ls_sqldbdevpriya_sys_asgnd_mgd_id",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
