@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "target_wildcard",
+				"folderPath": "target_listoffiles",
 				"fileSystem": "adlsgen2priyacontainer"
 			},
 			"columnDelimiter": ",",
