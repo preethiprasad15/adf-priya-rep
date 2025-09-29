@@ -15,22 +15,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_sqldbdevpriya'"
 		},
-		"ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_sqldbdevpriya_sys_asgnd_mgd_id'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserverdevpriya.database.windows.net;Initial Catalog=sqldbdevpriya"
-		},
 		"ls_sqltargetdbdevpriya_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_sqltargetdbdevpriya'"
 		},
 		"ls_adlsgen2priya_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://adlsgen2priya.dfs.core.windows.net"
+			"defaultValue": "https://adlsgen2preethi.dfs.core.windows.net"
 		},
 		"ls_keyvault_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://keyvault-priya.vault.azure.net/"
+			"defaultValue": "https://keyvault-preethi.vault.azure.net/"
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_server": {
 			"type": "string",
@@ -42,7 +37,7 @@
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "priya"
+			"defaultValue": "preethi"
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_server": {
 			"type": "string",
@@ -54,7 +49,7 @@
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "priya"
+			"defaultValue": "preethi"
 		},
 		"ls_web_restAPI_properties_typeProperties_url": {
 			"type": "string",
@@ -191,20 +186,6 @@
 						"type": "SecureString",
 						"value": "[parameters('ls_sqldbdevpriya_password')]"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_sqldbdevpriya_sys_asgnd_mgd_id')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "ls_sqldbdevpriya_sys_asgnd_mgd_id",
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -482,6 +463,84 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_src_df1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sqldbdevpriya",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dep",
+						"type": "nvarchar"
+					},
+					{
+						"name": "salary",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "last_updated",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "employees"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sqldbdevpriya')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_src_df2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sqldbdevpriya",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "location",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "employees_loc"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sqldbdevpriya')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_src_file_copybehaviour')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -705,35 +764,6 @@
 							"value": "@dataset().filename",
 							"type": "Expression"
 						},
-						"folderPath": "source",
-						"fileSystem": "adlsgen2priyacontainer"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_adlsgen2priya')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_src_file_products')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_adlsgen2priya",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Product-sales.csv",
 						"folderPath": "source",
 						"fileSystem": "adlsgen2priyacontainer"
 					},

@@ -11,17 +11,14 @@
 		"ls_sqldbdevpriya_password": {
 			"value": ""
 		},
-		"ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString": {
-			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserverdevpriya.database.windows.net;Initial Catalog=sqldbdevpriya"
-		},
 		"ls_sqltargetdbdevpriya_password": {
 			"value": ""
 		},
 		"ls_adlsgen2priya_properties_typeProperties_url": {
-			"value": "https://adlsgen2priya.dfs.core.windows.net"
+			"value": "https://adlsgen2preethi.dfs.core.windows.net"
 		},
 		"ls_keyvault_properties_typeProperties_baseUrl": {
-			"value": "https://keyvault-priya.vault.azure.net/"
+			"value": "https://keyvault-preethi.vault.azure.net/"
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_server": {
 			"value": "sqlserverdevpriya.database.windows.net"
@@ -30,10 +27,10 @@
 			"value": "sqldbdevpriya"
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_userName": {
-			"value": "priya"
+			"value": "preethi"
 		},
 		"ls_sqldbdevpriya_keyvault_properties_typeProperties_connectionString_secretName": {
-			"value": "secretdbtest"
+			"value": "secretpreethi"
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_server": {
 			"value": "sqlserverdevpriya.database.windows.net"
@@ -42,7 +39,7 @@
 			"value": "sqltargetdbdevpriya"
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_userName": {
-			"value": "priya"
+			"value": "preethi"
 		},
 		"ls_web_restAPI_properties_typeProperties_url": {
 			"value": "https://reqres.in/api/users"

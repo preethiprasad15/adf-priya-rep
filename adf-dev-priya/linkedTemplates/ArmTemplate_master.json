@@ -15,22 +15,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_sqldbdevpriya'"
 		},
-		"ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_sqldbdevpriya_sys_asgnd_mgd_id'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserverdevpriya.database.windows.net;Initial Catalog=sqldbdevpriya"
-		},
 		"ls_sqltargetdbdevpriya_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_sqltargetdbdevpriya'"
 		},
 		"ls_adlsgen2priya_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://adlsgen2priya.dfs.core.windows.net"
+			"defaultValue": "https://adlsgen2preethi.dfs.core.windows.net"
 		},
 		"ls_keyvault_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://keyvault-priya.vault.azure.net/"
+			"defaultValue": "https://keyvault-preethi.vault.azure.net/"
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_server": {
 			"type": "string",
@@ -42,11 +37,11 @@
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "priya"
+			"defaultValue": "preethi"
 		},
 		"ls_sqldbdevpriya_keyvault_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
-			"defaultValue": "secretdbtest"
+			"defaultValue": "secretpreethi"
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_server": {
 			"type": "string",
@@ -58,7 +53,7 @@
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "priya"
+			"defaultValue": "preethi"
 		},
 		"ls_web_restAPI_properties_typeProperties_url": {
 			"type": "string",
@@ -104,9 +99,6 @@
 					},
 					"ls_sqldbdevpriya_password": {
 						"value": "[parameters('ls_sqldbdevpriya_password')]"
-					},
-					"ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString": {
-						"value": "[parameters('ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString')]"
 					},
 					"ls_sqltargetdbdevpriya_password": {
 						"value": "[parameters('ls_sqltargetdbdevpriya_password')]"

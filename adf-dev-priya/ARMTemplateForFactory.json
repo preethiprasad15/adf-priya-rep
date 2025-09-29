@@ -15,22 +15,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_sqldbdevpriya'"
 		},
-		"ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_sqldbdevpriya_sys_asgnd_mgd_id'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserverdevpriya.database.windows.net;Initial Catalog=sqldbdevpriya"
-		},
 		"ls_sqltargetdbdevpriya_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_sqltargetdbdevpriya'"
 		},
 		"ls_adlsgen2priya_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://adlsgen2priya.dfs.core.windows.net"
+			"defaultValue": "https://adlsgen2preethi.dfs.core.windows.net"
 		},
 		"ls_keyvault_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://keyvault-priya.vault.azure.net/"
+			"defaultValue": "https://keyvault-preethi.vault.azure.net/"
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_server": {
 			"type": "string",
@@ -42,11 +37,11 @@
 		},
 		"ls_sqldbdevpriya_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "priya"
+			"defaultValue": "preethi"
 		},
 		"ls_sqldbdevpriya_keyvault_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
-			"defaultValue": "secretdbtest"
+			"defaultValue": "secretpreethi"
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_server": {
 			"type": "string",
@@ -58,7 +53,7 @@
 		},
 		"ls_sqltargetdbdevpriya_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "priya"
+			"defaultValue": "preethi"
 		},
 		"ls_web_restAPI_properties_typeProperties_url": {
 			"type": "string",
@@ -1002,6 +997,53 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pl_dataflow')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_file_copy')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1317,7 +1359,7 @@
 								"type": "DelimitedTextSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
+									"copyBehavior": "PreserveHierarchy"
 								},
 								"formatSettings": {
 									"type": "DelimitedTextWriteSettings",
@@ -1801,7 +1843,14 @@
 						"name": "Copy file",
 						"description": "Copy data",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Wait1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -1857,6 +1906,15 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
 					}
 				],
 				"policy": {
@@ -2003,7 +2061,7 @@
 								"type": "Expression"
 							},
 							"condition": {
-								"value": "@or(contains(item().name,'Product'),contains(item().name,'emp'))",
+								"value": "@or(contains(item().name,'stud'),contains(item().name,'xy'))",
 								"type": "Expression"
 							}
 						}
@@ -3323,7 +3381,7 @@
 									"dependsOn": [],
 									"userProperties": [],
 									"typeProperties": {
-										"waitTimeInSeconds": 180
+										"waitTimeInSeconds": 30
 									}
 								}
 							],
@@ -3662,185 +3720,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_webactivity_RestAPI_sample')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Web1",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Wait1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "GET",
-							"headers": {
-								"x-api-key": "reqres-free-v1"
-							},
-							"url": "https://reqres.in/api/users"
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Web1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@range(1,activity('Web1').output.total_pages)",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "Copy data1",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 1,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "RestSource",
-											"httpRequestTimeout": "00:01:40",
-											"requestInterval": "00.00:00:00.010",
-											"requestMethod": "GET",
-											"paginationRules": {
-												"supportRFC5988": "true"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"mappings": [
-												{
-													"source": {
-														"path": "id"
-													},
-													"sink": {
-														"name": "emp_id"
-													}
-												},
-												{
-													"source": {
-														"path": "email"
-													},
-													"sink": {
-														"name": "emp_email"
-													}
-												},
-												{
-													"source": {
-														"path": "first_name"
-													},
-													"sink": {
-														"name": "first_name"
-													}
-												},
-												{
-													"source": {
-														"path": "last_name"
-													},
-													"sink": {
-														"name": "last_name"
-													}
-												},
-												{
-													"source": {
-														"path": "avatar"
-													},
-													"sink": {
-														"name": "avatar"
-													}
-												}
-											],
-											"collectionReference": "$['data']"
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "ds_RestAPI_for_copy",
-											"type": "DatasetReference",
-											"parameters": {
-												"pageno": "?page=@{item()}"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "ds_tgt_file_web_restAPI",
-											"type": "DatasetReference",
-											"parameters": {
-												"filename": {
-													"value": "TargetFilePage_@{item()}.csv",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					},
-					{
-						"name": "Wait1",
-						"type": "Wait",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"waitTimeInSeconds": 1
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-09-19T14:26:44Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_RestAPI_for_copy')]",
-				"[concat(variables('factoryId'), '/datasets/ds_tgt_file_web_restAPI')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/pl_webactivity_restAPI')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3903,6 +3782,9 @@
 											"httpRequestTimeout": "00:01:40",
 											"requestInterval": "00.00:00:00.010",
 											"requestMethod": "GET",
+											"additionalHeaders": {
+												"x-api-key": "reqres-free-v1"
+											},
 											"paginationRules": {
 												"supportRFC5988": "true"
 											}
@@ -3918,7 +3800,53 @@
 												"fileExtension": ".txt"
 											}
 										},
-										"enableStaging": false
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"path": "id"
+													},
+													"sink": {
+														"name": "id"
+													}
+												},
+												{
+													"source": {
+														"path": "email"
+													},
+													"sink": {
+														"name": "email"
+													}
+												},
+												{
+													"source": {
+														"path": "first_name"
+													},
+													"sink": {
+														"name": "first_name"
+													}
+												},
+												{
+													"source": {
+														"path": "last_name"
+													},
+													"sink": {
+														"name": "last_name"
+													}
+												},
+												{
+													"source": {
+														"path": "avatar"
+													},
+													"sink": {
+														"name": "avatar"
+													}
+												}
+											],
+											"collectionReference": "$['data']"
+										}
 									},
 									"inputs": [
 										{
@@ -3938,7 +3866,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"filename": {
-													"value": "TargetWebPage_@{item()}",
+													"value": "TargetWebPage_@{item()}.csv",
 													"type": "Expression"
 												}
 											}
@@ -3958,131 +3886,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_RestAPI_for_copy')]",
 				"[concat(variables('factoryId'), '/datasets/ds_tgt_file_web_restAPI')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Web1",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "GET",
-							"headers": {},
-							"url": "https://dummy.restapiexample.com/api/v1/employees"
-						}
-					},
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Web1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"additionalColumns": [
-									{
-										"name": "webactivitycolumn",
-										"value": {
-											"value": "@{activity('Web1').output.data}",
-											"type": "Expression"
-										}
-									}
-								],
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "webactivitycolumn",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"physicalType": "String",
-											"ordinal": 1
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_src_file_web",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_tgt_file_web",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-09-12T11:46:05Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_src_file_web')]",
-				"[concat(variables('factoryId'), '/datasets/ds_tgt_file_web')]"
 			]
 		},
 		{
@@ -4219,6 +4022,84 @@
 						"value": "@dataset().tablename",
 						"type": "Expression"
 					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sqldbdevpriya')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_src_df1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sqldbdevpriya",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dep",
+						"type": "nvarchar"
+					},
+					{
+						"name": "salary",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "last_updated",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "employees"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sqldbdevpriya')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_src_df2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sqldbdevpriya",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "location",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "employees_loc"
 				}
 			},
 			"dependsOn": [
@@ -4833,57 +4714,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_src_sys_asgnd_mgd_id')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sqldbdevpriya_sys_asgnd_mgd_id",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "team",
-						"type": "nvarchar"
-					},
-					{
-						"name": "score",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "matches_played",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "last_updated",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "inc_iplteams"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sqldbdevpriya_sys_asgnd_mgd_id')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_src_tumbling')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -5026,6 +4856,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_tgt_df')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adlsgen2priya",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "target_dataflow",
+						"fileSystem": "adlsgen2priyacontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adlsgen2priya')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_tgt_file_copy_basedonsize')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -5076,7 +4934,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "target_copybehaviourflatten",
+						"folderPath": "target_copybehaviour",
 						"fileSystem": "adlsgen2priyacontainer"
 					},
 					"columnDelimiter": ",",
@@ -5636,20 +5494,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ls_sqldbdevpriya_sys_asgnd_mgd_id')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "ls_sqldbdevpriya_sys_asgnd_mgd_id",
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_sqldbdevpriya_sys_asgnd_mgd_id_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ls_sqltargetdbdevpriya')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -5707,9 +5551,9 @@
 				"typeProperties": {
 					"recurrence": {
 						"frequency": "Minute",
-						"interval": 5,
-						"startTime": "2025-09-20T12:35:00",
-						"endTime": "2025-09-20T12:46:00",
+						"interval": 2,
+						"startTime": "2025-09-20T12:46:00",
+						"endTime": "2025-09-29T12:51:00",
 						"timeZone": "India Standard Time"
 					}
 				}
@@ -5724,7 +5568,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipeline": {
 					"pipelineReference": {
 						"referenceName": "pl_tumbling_window_trigger",
@@ -5751,6 +5595,99 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pl_tumbling_window_trigger')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_src_df1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_src_df2",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_tgt_df",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						},
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          name as string,",
+						"          dep as string,",
+						"          salary as decimal(10,2),",
+						"          last_updated as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          id as integer,",
+						"          location as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source2",
+						"source1, source2 join(source1@id == source2@id,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 filter(equals(dep,'Finance')) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['dataflowtest'],",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          id = source1@id,",
+						"          name,",
+						"          dep,",
+						"          salary,",
+						"          last_updated,",
+						"          id = source2@id,",
+						"          location",
+						"     ),",
+						"     partitionBy('hash', 1)) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_src_df1')]",
+				"[concat(variables('factoryId'), '/datasets/ds_src_df2')]",
+				"[concat(variables('factoryId'), '/datasets/ds_tgt_df')]"
 			]
 		}
 	]

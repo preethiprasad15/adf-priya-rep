@@ -9,13 +9,54 @@
 		},
 		"ls_sqldbdevpriya_keyvault_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
-			"defaultValue": "secretdbtest"
+			"defaultValue": "secretpreethi"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_tgt_file_filter')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adlsgen2priya",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"targetfilename": {
+						"type": "string"
+					},
+					"container": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().targetfilename",
+							"type": "Expression"
+						},
+						"folderPath": "target_filter",
+						"fileSystem": {
+							"value": "@dataset().container",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ds_tgt_file_filter_append')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1108,130 +1149,6 @@
 											"type": "AzureSqlSink",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "ds_src_custom_full_load",
-											"type": "DatasetReference",
-											"parameters": {
-												"schemaname": {
-													"value": "@item().tableSchemaName",
-													"type": "Expression"
-												},
-												"tablename": {
-													"value": "@item().tableName",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "ds_tgt_custom_full_load",
-											"type": "DatasetReference",
-											"parameters": {
-												"schemaname": {
-													"value": "@item().tableSchemaName",
-													"type": "Expression"
-												},
-												"tablename": {
-													"value": "@item().tableName",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"TableList": {
-						"type": "array",
-						"defaultValue": [
-							{
-								"tableName": "iplteams_last7",
-								"tableSchemaName": "dbo",
-								"WaterMark_Column": "last_updated"
-							},
-							{
-								"tableName": "employees_last7",
-								"tableSchemaName": "dbo",
-								"WaterMark_Column": "last_updated"
-							}
-						]
-					}
-				},
-				"folder": {
-					"name": "Load Type"
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-09-17T07:43:16Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_custom_last7days')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.TableList",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy data1",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"sqlReaderQuery": {
-												"value": "select * from @{item().tableSchemaName}.@{item().tablename}\nwhere \n@{item().WaterMark_Column} >=\n'@{formatDateTime(adddays(utcNow(),-7),'yyyy-MM-dd')}'\n",
-												"type": "Expression"
-											},
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "AzureSqlSink",
-											"preCopyScript": {
-												"value": "delete from @{item().tableSchemaName}.@{item().tablename}\nwhere \n@{item().WaterMark_Column} >=\n'@{formatDateTime(adddays(utcNow(),-7),'yyyy-MM-dd')}'",
-												"type": "Expression"
-											},
-											"writeBehavior": "insert",
-											"sqlWriterUseTableLock": false,
-											"disableMetricsCollection": false
 										},
 										"enableStaging": false,
 										"translator": {
