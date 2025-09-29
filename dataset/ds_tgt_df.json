@@ -1,5 +1,5 @@
 {
-	"name": "ds_tgt_file_copybehaviour",
+	"name": "ds_tgt_df",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adlsgen2priya",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "target_copybehaviour",
+				"folderPath": "target_dataflow",
 				"fileSystem": "adlsgen2priyacontainer"
 			},
 			"columnDelimiter": ",",
@@ -19,6 +19,5 @@
 			"quoteChar": "\""
 		},
 		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

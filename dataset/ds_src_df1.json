@@ -1,8 +1,8 @@
 {
-	"name": "ds_src_sys_asgnd_mgd_id",
+	"name": "ds_src_df1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_sqldbdevpriya_sys_asgnd_mgd_id",
+			"referenceName": "ls_sqldbdevpriya",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -18,18 +18,14 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "team",
+				"name": "dep",
 				"type": "nvarchar"
 			},
 			{
-				"name": "score",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "matches_played",
-				"type": "int",
-				"precision": 10
+				"name": "salary",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
 			},
 			{
 				"name": "last_updated",
@@ -40,8 +36,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "inc_iplteams"
+			"table": "employees"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

@@ -1,0 +1,26 @@
+{
+	"name": "ds_src_df2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sqldbdevpriya",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "location",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "employees_loc"
+		}
+	}
+}
