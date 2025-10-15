@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-dev-priya"
 		},
+		"ls_adb_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_adb'"
+		},
 		"ls_adlsgen2priya_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_adlsgen2priya'"
@@ -18,6 +22,10 @@
 		"ls_sqltargetdbdevpriya_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_sqltargetdbdevpriya'"
+		},
+		"ls_adb_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1013-143809-ckxj9vcw"
 		},
 		"ls_adlsgen2priya_properties_typeProperties_url": {
 			"type": "string",
@@ -94,6 +102,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ls_adb_accessToken": {
+						"value": "[parameters('ls_adb_accessToken')]"
+					},
 					"ls_adlsgen2priya_accountKey": {
 						"value": "[parameters('ls_adlsgen2priya_accountKey')]"
 					},
@@ -102,6 +113,9 @@
 					},
 					"ls_sqltargetdbdevpriya_password": {
 						"value": "[parameters('ls_sqltargetdbdevpriya_password')]"
+					},
+					"ls_adb_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ls_adb_properties_typeProperties_existingClusterId')]"
 					},
 					"ls_adlsgen2priya_properties_typeProperties_url": {
 						"value": "[parameters('ls_adlsgen2priya_properties_typeProperties_url')]"

@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "adf-dev-priya"
 		},
+		"ls_adb_accessToken": {
+			"value": ""
+		},
 		"ls_adlsgen2priya_accountKey": {
 			"value": ""
 		},
@@ -13,6 +16,9 @@
 		},
 		"ls_sqltargetdbdevpriya_password": {
 			"value": ""
+		},
+		"ls_adb_properties_typeProperties_existingClusterId": {
+			"value": "1013-143809-ckxj9vcw"
 		},
 		"ls_adlsgen2priya_properties_typeProperties_url": {
 			"value": "https://adlsgen2preethi.dfs.core.windows.net"
