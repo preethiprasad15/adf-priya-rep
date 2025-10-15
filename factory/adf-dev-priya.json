@@ -9,6 +9,10 @@
 			"targetfilepath": {
 				"type": "string",
 				"value": "target_globalparam"
+			},
+			"ADLS_Prefix": {
+				"type": "string",
+				"value": "abfs://adlsgen2priyacontainer@adlsgen2preethi.dfs.core.windows.net"
 			}
 		}
 	},
