@@ -1,0 +1,9 @@
+{
+	"name": "adf-jhaanvi-dev",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "baaf1e39-d00f-4750-a8f8-8ef856d3893f",
+		"tenantId": "fbe3ef10-bf68-412a-8281-663763af9ac1"
+	}
+}

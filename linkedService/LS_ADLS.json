@@ -1,0 +1,11 @@
+{
+	"name": "LS_ADLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://adlspreethi.blob.core.windows.net/adlspreethicontainer/control/"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"name": "DS_Jira_REST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Jira_REST",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"jql": {
+				"type": "String"
+			},
+			"startAt": {
+				"type": "Int"
+			},
+			"maxResults": {
+				"type": "Int"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "/rest/api/3/search/jql",
+			"requestMethod": "GET",
+			"queryParameters": {
+				"jql": "@{dataset().jql}",
+				"startAt": "@{dataset().startAt}",
+				"maxResults": "@{dataset().maxResults}"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

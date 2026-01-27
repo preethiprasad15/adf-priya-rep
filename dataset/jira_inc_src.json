@@ -1,0 +1,24 @@
+{
+	"name": "jira_inc_src",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Jira1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"updated_date": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "JiraObject",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "SELECT *\nFROM \"Agile\".\"Agile_Board_Backlog_Issues\"\nWHERE Issues_fields_updated > '@{dataset().updated_date}'",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

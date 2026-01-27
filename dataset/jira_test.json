@@ -1,0 +1,13 @@
+{
+	"name": "jira_test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Jira1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "JiraObject",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

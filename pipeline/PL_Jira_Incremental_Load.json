@@ -1,0 +1,152 @@
+{
+	"name": "PL_Jira_Incremental_Load",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_Watermark",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"dataset": {
+						"referenceName": "DS_ADLS_Jira_Watermark",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "Set_LastUpdated",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Watermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Lookup_Watermark').output.firstRow, null)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Set_Watermark_From_File",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "lastUpdated",
+								"value": {
+									"value": "@activity('Lookup_Watermark').output.firstRow.lastUpdated",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Set_Default_Watermark",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "lastUpdated",
+								"value": {
+									"value": "1970-01-01 00:00",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Copy_Jira_Issues",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Set_LastUpdated",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:02:00",
+						"requestInterval": "00.00:00:00.010"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Jira_REST",
+						"type": "DatasetReference",
+						"parameters": {
+							"jql": "@{concat('updated >= \"', variables('lastUpdated'), '\" ORDER BY updated ASC')}",
+							"startAt": 0,
+							"maxResults": 50
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADLS_Jira_Raw",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"lastUpdated": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-12-31T18:50:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

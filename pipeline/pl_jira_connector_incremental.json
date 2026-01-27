@@ -1,0 +1,62 @@
+{
+	"name": "pl_jira_connector_incremental",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JiraSource"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "jira_inc_src",
+						"type": "DatasetReference",
+						"parameters": {
+							"updated_date": {
+								"value": "@pipeline().parameters.test_date",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Json_jira_inc",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"test_date": {
+				"type": "string",
+				"defaultValue": "2026-01-01 00:00:00.000"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-01-20T14:44:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

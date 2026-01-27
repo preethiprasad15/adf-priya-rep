@@ -1,0 +1,17 @@
+{
+	"name": "jira2_src",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Jira2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "JiraObject",
+		"schema": [],
+		"typeProperties": {
+			"schema": "Api",
+			"table": "IssueAllTypes"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

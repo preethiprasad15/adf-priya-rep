@@ -1,0 +1,16 @@
+{
+	"name": "JiraObject1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Jira1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "JiraObject",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "\"Agile\".\"Agile_Board_Backlog_Issues\""
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
